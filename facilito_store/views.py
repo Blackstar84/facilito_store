@@ -43,7 +43,15 @@ def logout_view(request):
     return redirect('login')
 
 def register(request):
-    form = RegisterForm()
+    form = RegisterForm(request.POST or None)
+    if request.POST and form.is_valid():
+        username = form.cleaned_data.get('username') # Diccionario
+        email = form.cleaned_data.get('email') # Diccionario
+        password = form.cleaned_data.get('password') # Diccionario
+        print(username)
+        print(email)
+        print(password)
+        
     return render(request, 'users/register.html', {
         'form': form
     })
