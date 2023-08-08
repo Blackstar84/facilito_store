@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from .forms import RegisterForm
+
 
 def index(request):
     # return HttpResponse('Hola mundo!')
@@ -39,3 +41,9 @@ def logout_view(request):
     logout(request)  
     messages.success(request, 'Sesión cerrada exitosamente')
     return redirect('login')
+
+def register(request):
+    form = RegisterForm()
+    return render(request, 'users/register.html', {
+        'form': form
+    })
