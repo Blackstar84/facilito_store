@@ -46,14 +46,16 @@ def logout_view(request):
 def register(request):
     form = RegisterForm(request.POST or None)
     if request.POST and form.is_valid():
-        username = form.cleaned_data.get('username') # Diccionario
-        email = form.cleaned_data.get('email') # Diccionario
-        password = form.cleaned_data.get('password') # Diccionario
+        # username = form.cleaned_data.get('username') # Diccionario
+        # email = form.cleaned_data.get('email') # Diccionario
+        # password = form.cleaned_data.get('password') # Diccionario
         # print(username)
         # print(email)
         # print(password)
+        # user = User.objects.create_user(username, email, password)
         
-        user = User.objects.create_user(username, email, password)
+        user = form.save()
+        
         if user:
             login(request, user)
             messages.success(request, 'Usuario creado exitosamente!!!')
