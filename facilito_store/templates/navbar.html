@@ -1,3 +1,6 @@
+{% url 'login' as login %} #usuarios/login
+{% url 'register' as register %} #usuarios/register
+
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a href="#" class="navbar-brand">Facilito Store</a>
 
@@ -7,17 +10,17 @@
 
     <div id="navb" class="navbar-collapse collapse hide">
         <ul class="nav navbar-nav ml-auto">
-            <li class="navbar-item">
-                <a href="#" class="nav-link">
+            <li class="navbar-item {% if request.path == login %}active{%endif%}">
+                <a href="{{ login }}" class="nav-link">
                     <span class="fas fa-user"></span> Login</a>
             </li>
-            <li class="navbar-item">
-                <a href="#" class="nav-link">
+            <li class="navbar-item {% if request.path == register %}active{%endif%}">
+                <a href="{{ register }}" class="nav-link">
                     <span class="fas fa-user"></span> 
                     Registro</a>
             </li>
             <li class="navbar-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'logout' %}" class="nav-link">
                     <span class="fas fa-sign-in-alt"></span> 
                     Logout</a>
             </li>
