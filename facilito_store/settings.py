@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'facilito_store'
+    'facilito_store',
+    'products',
 ]
 
 MIDDLEWARE = [
