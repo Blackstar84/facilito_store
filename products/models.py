@@ -32,4 +32,4 @@ def set_slug(sender, instance,*args, **kwargs): # callback
         instance.slug = slug
             
     
-pre_save.connect(set_slug, sender=Product)    
+pre_save.connect(set_slug, sender=Product)
