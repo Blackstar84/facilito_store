@@ -1,12 +1,13 @@
 from typing import Any, Dict
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from products.models import Product
 
 # Create your views here.
 
-class ProductListView(ListView):
+class ProductListView(ListView): # id -> pk
     template_name = 'index.html'
     queryset = Product.objects.all().order_by('-id')
     
@@ -15,5 +16,16 @@ class ProductListView(ListView):
         context['message'] = 'Listado de productos'
         context['products'] = context['product_list']
         # context['products'] = context['object_list']
-        print(context)
+        # print(context)
+        return context
+    
+    
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'products/product.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # print(context)
+        
         return context
