@@ -4,15 +4,9 @@
 {% block content %}
 <div class="col">
     <h4 class="text-center">{{ message }}</h4>
+    {% include 'products/snippets/search.html' %}
     
-    <div class="row">
-        {% for object in products %}
-          <div class="col-3 mt-5">
-            {% include 'products/snippets/product.html' with product=object %}
-          </div> 
-            
-        {% endfor %}
-    </div>
+    {% include 'products/snippets/list.html' %}
     
 </div>
 {% endblock %}
