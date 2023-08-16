@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'facilito_store',
     'products',
     'categories',
+    'users',
 ]
 
 MIDDLEWARE = [
