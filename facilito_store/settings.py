@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'facilito_store',
     'products',
+    'categories',
 ]
 
 MIDDLEWARE = [
