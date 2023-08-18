@@ -26,7 +26,9 @@
                                     <img src="{{ product.image.url }}" alt="Imagen del producto" width="60" height="60">
                                 {% endif %}
                             </th>
-                            <th><a href="{% url 'products:product' product.slug %}">{{ product.title }}</a></th>
+                            <th><a href="{% url 'products:product' product.slug %}">{{ product.title }}</a>
+                                {% include 'carts/snippets/remove.html' %}
+                            </th>
                             <th>1</th>
                             <th>
                                 <span class="font-wieight-bold text-danger">{{ product.price | price_format }}</span>
