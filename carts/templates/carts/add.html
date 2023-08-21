@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load product_extras %}
+{% load cart_extras %}
 
 {% block content %}
     <div class="col-3">
@@ -11,7 +12,7 @@
     </div>   
     <div class="col">
         <div class="h3 font-wight-bold text-success">
-            Producto agregado al carrito de compras
+            {{ quantity | quantity_add_format }} al carrito
         </div>
         <div>
             <a href="{% url 'products:product' product.slug %}">{{ product.title }}</a>
