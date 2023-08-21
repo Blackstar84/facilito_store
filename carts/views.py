@@ -27,7 +27,7 @@ def add(request):
     
 def remove(request):
     cart = get_or_create_cart(request)
-    product = Product.objects.get('product_id')
+    product = Product.objects.get(pk=request.POST.get('product_id'))
     
     cart.products.remove(product)
     
