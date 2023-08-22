@@ -9,5 +9,6 @@ def order(request):
     cart = get_or_create_cart(request) 
     order = get_or_create_order(cart, request)
     return render(request, 'orders/order.html', {
-        
+       'cart': cart,
+       'order': order,
     })
