@@ -1,3 +1,6 @@
+from typing import Any
+from django import http
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import reverse
 from django.views.generic import ListView
@@ -48,3 +51,11 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
     
     def get_success_url(self):
         return reverse('shipping_addresses:shipping_addresses')
+    
+    def dispatch(self, request, *args, **kwargs):
+        print(self.get_object().user_id)
+        print(request.user.id)
+        if request.user.id != self.get_object().user_id:
+            return redirect('carts:cart')
+        
+        return super(ShippingAddressUpdateView, self).dispatch(request, *args, **kwargs)
