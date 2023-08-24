@@ -5,17 +5,21 @@ from .forms import ShippingAddressForm
 from django.shortcuts import redirect
 from django.contrib import messages
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 
 
-class ShippingAddressListView(ListView):
+class ShippingAddressListView(LoginRequiredMixin, ListView):
+    login_url = 'login'
     model = ShippingAddress
     template_name = 'shipping_addresses/shipping_addresses.html'
     
     def set_queryset(self):
         return ShippingAddress.objects.filter(user=self.request.user).order_by('-default')
     
-    
+@login_required(login_url='login')
 def create(request):
     form = ShippingAddressForm(request.POST or None)
     
