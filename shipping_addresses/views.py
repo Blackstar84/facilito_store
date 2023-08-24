@@ -17,6 +17,8 @@ from django.views.generic.edit import DeleteView
 
 from django.urls import reverse_lazy
 
+from django.shortcuts import get_object_or_404
+
 # Create your views here.
 
 
@@ -35,7 +37,7 @@ def create(request):
     if request.method == 'POST' and form.is_valid():
         shipping_address = form.save(commit=False)
         shipping_address.user = request.user
-        shipping_address.default = not ShippingAddress.objects.filter(user=request.user).exists()
+        shipping_address.default = not request.user.has_shipping_address()
         shipping_address.save()
         
         messages.success(request, 'Dirección creada exitosamente')
@@ -56,8 +58,6 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
         return reverse('shipping_addresses:shipping_addresses')
     
     def dispatch(self, request, *args, **kwargs):
-        print(self.get_object().user_id)
-        print(request.user.id)
         if request.user.id != self.get_object().user_id:
             return redirect('carts:cart')
         
@@ -70,6 +70,7 @@ class ShippingAddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteV
     template_name = 'shipping_addresses/delete.html'
     success_url = reverse_lazy('shipping_addresses:shipping_addresses')
     
+    
     def dispatch(self, request, *args, **kwargs):
         if self.get_object().default:
             return redirect('shipping_addresses:shipping_addresses')
@@ -78,3 +79,18 @@ class ShippingAddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteV
             return redirect('carts:cart')
         
         return super(ShippingAddressDeleteView, self).dispatch(request, *args, **kwargs)
+   
+    
+@login_required(login_url='login')  
+def default(request, pk):
+    shipping_address = get_object_or_404(ShippingAddress, pk=pk)
+    
+    if request.user.id != shipping_address.user_id:
+        return redirect('carts:cart')
+    
+    if request.user.has_shipping_address():
+        request.user.shipping_address.update_default()
+    
+    shipping_address.update_default(True)
+    
+    return redirect('shipping_addresses:shipping_addresses')
