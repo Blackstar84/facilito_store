@@ -13,6 +13,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import DeleteView
+
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -59,3 +62,19 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
             return redirect('carts:cart')
         
         return super(ShippingAddressUpdateView, self).dispatch(request, *args, **kwargs)
+    
+    
+class ShippingAddressDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    login_url = 'login'
+    model = ShippingAddress
+    template_name = 'shipping_addresses/delete.html'
+    success_url = reverse_lazy('shipping_addresses:shipping_addresses')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().default:
+            return redirect('shipping_addresses:shipping_addresses')
+        
+        if request.user.id != self.get_object().user_id:
+            return redirect('carts:cart')
+        
+        return super(ShippingAddressDeleteView, self).dispatch(request, *args, **kwargs)
