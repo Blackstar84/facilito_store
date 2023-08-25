@@ -19,6 +19,11 @@ from django.urls import reverse_lazy
 
 from django.shortcuts import get_object_or_404
 
+from carts.utils import get_or_create_cart
+from orders.utils import get_or_create_order
+
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 
 
@@ -39,6 +44,15 @@ def create(request):
         shipping_address.user = request.user
         shipping_address.default = not request.user.has_shipping_address()
         shipping_address.save()
+        
+        if request.GET.get('next'):
+            if request.GET['next'] == reverse('orders:address'):
+                cart = get_or_create_cart(request)
+                order = get_or_create_order(cart, request)
+                
+                order.update_shipping_address(shipping_address)
+                
+                return HttpResponseRedirect(request.GET['next'])
         
         messages.success(request, 'Dirección creada exitosamente')
         return redirect('shipping_addresses:shipping_addresses')

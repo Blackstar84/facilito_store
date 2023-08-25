@@ -32,14 +32,17 @@ class Order(models.Model):
     def __str__(self):
         return self.order_id
     
+    def update_shipping_address(self, shipping_address):
+        self.shipping_address = shipping_address
+        self.save()
+    
     def get_or_set_shipping_address(self):
         if self.shipping_address:
             return self.shipping_address
         
         shipping_address = self.user.shipping_address
         if shipping_address:
-            self.shipping_address = shipping_address
-            self.save()
+            self.update_shipping_address(shipping_address)
         
         return shipping_address
     
