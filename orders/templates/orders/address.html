@@ -16,6 +16,9 @@
             <div>
                
                     {% include 'shipping_addresses/snippets/shipping_address.html' %}
+                    <div class="mt-2">
+                        <a href="{% url 'orders:confirm' %}" class="btn btn-warning">Entregar a esta dirección</a>
+                    </div>
                     
                     {% if can_choose_address %}
                         <div class="mt-2">
@@ -28,7 +31,7 @@
             <div class="h3">Registra tu dirección de envío</div>
             <div>
                 {% url 'orders:address' as next_url %}
-                <a href="{% url 'shipping_addresses:create' %}?next={{ next_url }}">Otra dirección</a>
+                <a href="{% url 'shipping_addresses:create' %}?next={{ next_url }}">Nueva dirección de envío</a>
             </div>    
         {% endif %}
             
