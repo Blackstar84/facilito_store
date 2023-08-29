@@ -49,6 +49,10 @@ class Order(models.Model):
     def cancel(self):
         self.status = OrderStatus.CANCELED
         self.save()
+        
+    def complete(self):
+        self.status = OrderStatus.COMPLETED
+        self.save()    
     
     def update_total(self):
         self.total = self.get_total()
