@@ -9,6 +9,10 @@ from django.shortcuts import redirect
 from shipping_addresses.models import ShippingAddress
 from django.contrib import messages
 
+from django.core.mail import send_mail
+
+from .mails import Mail
+
 
 # Create your views here.
 
@@ -97,6 +101,7 @@ def cancel(request):
    messages.error(request, 'Orden cancelada')
    
    return redirect('index')
+
    
 @login_required(login_url='login')
 def complete(request):
@@ -107,6 +112,8 @@ def complete(request):
      return redirect('carts:cart')
   
    order.complete()
+   # Esto ya no funciona con gmail por su protocolo de seguridad
+   # Mail.send_complete_order(order,request.user)
   
    destroy_cart(request)
    destroy_order(request)

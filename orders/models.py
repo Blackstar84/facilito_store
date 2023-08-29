@@ -1,4 +1,4 @@
-from enum import Enum
+
 from django.db import models
 
 from carts.models import Cart
@@ -8,15 +8,10 @@ from users.models import User
 from django.db.models.signals import pre_save
 import uuid
 
-# Create your models here.
+from .common import OrderStatus, choices
 
-class OrderStatus(Enum):
-    CREATED = 'CREATED'
-    PAYED = 'PAYED'
-    COMPLETED = 'COMPLETED'
-    CANCELED = 'CANCELED'
-    
-choices = [(tag, tag.value) for tag in OrderStatus]     
+
+# Create your models here.   
 
 
 class Order(models.Model):
