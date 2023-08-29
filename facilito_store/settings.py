@@ -130,7 +130,6 @@ USE_TZ = True
 # EMAIL_HOST_PASSWORD = config('USER_MAIL_PASSWORD')
 # EMAIL_USE_TLS = True
 
-# d280a1e161c76ca89e2b8381bd1272bc-us8
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
