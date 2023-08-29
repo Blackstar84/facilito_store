@@ -13,8 +13,19 @@ from django.core.mail import send_mail
 
 from .mails import Mail
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import ListView
+
 
 # Create your views here.
+
+
+class OrderListView(LoginRequiredMixin, ListView):
+   login_url = 'login'
+   template_name = 'orders/order.html'
+
+
+
 
 @login_required(login_url='login')
 def order(request):
