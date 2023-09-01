@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from .utils import get_or_create_order, breadcrumb, destroy_order
 from carts.utils import destroy_cart
@@ -16,13 +18,17 @@ from .mails import Mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 
+from django.db.models.query import EmptyQuerySet
 
 # Create your views here.
 
 
 class OrderListView(LoginRequiredMixin, ListView):
    login_url = 'login'
-   template_name = 'orders/order.html'
+   template_name = 'orders/orders.html'
+   
+   def get_queryset(self):
+      return self.request.user.orders_completed()
 
 
 
