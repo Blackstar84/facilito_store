@@ -1,3 +1,4 @@
+import threading
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
@@ -117,17 +118,17 @@ def cancel(request, cart, order):
    
 @login_required(login_url='login')
 @validate_cart_and_order
-def complete(request, cart, order):
-   cart = get_or_create_cart(request)
-   order = get_or_create_order(cart,request)
-   
+def complete(request, cart, order):   
    if request.user.id != order.user_id:
      return redirect('carts:cart')
   
    order.complete()
    # Esto ya no funciona con gmail por su protocolo de seguridad
    # Mail.send_complete_order(order,request.user)
-  
+   # thread = threading.Thread(target=Mail.send_complete_order, args=(
+   #    order, request.user
+   # ))
+   # thread.start()
    destroy_cart(request)
    destroy_order(request)
    
