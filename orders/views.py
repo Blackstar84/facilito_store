@@ -68,6 +68,7 @@ def select_address(request):
          'breadcrumb': breadcrumb(address=True),
          'shipping_addresses': shipping_addresses
       })
+
    
 @login_required(login_url='login')    
 @validate_cart_and_order   
