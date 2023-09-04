@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import pre_save
+
+import string
+import random
 
 # Create your models here.
 
@@ -13,3 +17,15 @@ class PromoCode(models.Model):
     
     def __str__(self):
         return self.code
+    
+    
+def set_code(sender, instance, *args, **kwargs):
+    if instance.code:
+        return
+    
+    chars = string.ascii_uppercase + string.digits
+    instance.code = ''.join(random.choice(chars) for _ in range(10))
+    
+    
+        
+pre_save.connect(set_code, sender=PromoCode)
