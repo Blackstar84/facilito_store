@@ -83,15 +83,17 @@
             e.preventDefault()
             const input = this.code
             const code = input.value
-            const url = this.action
+            const url = this.action + "?code=" + code
+            
+            //console.log(url)
 
             fetch(url)
                 .then(response=> response.json())
                 .then(response=>{
-                    console.log(response.name)
+                    console.log(response.discount)
                 })
-            console.log(code)
-            console.log('Hola desde el formulario')
+            //console.log(code)
+            //console.log('Hola desde el formulario')
         
         })
     </script>
