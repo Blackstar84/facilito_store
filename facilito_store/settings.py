@@ -133,6 +133,10 @@ USE_TZ = True
 # EMAIL_USE_TLS = True
 
 
+STRIPE_PUBLIC_KEY = 'pk_test_51NpFzvEzgrQQ4ItUuDhGL84Qpi0vhrnmSy8hytFf2N7vscdueVhh01ddIGdezgwqeOF7Drf7QnkRfcOI2sg8FIxR00ht6eYMXy'
+STRIPE_PRIVATE_KEY = 'sk_test_51NpFzvEzgrQQ4ItUTGKlQRZ9e4lkOix7M6D7mjiriyBt7PE90hGWdGBrl3WXERiMdgDvA71eMtfCwH7KjtPSB7yU002IScGiuA'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
