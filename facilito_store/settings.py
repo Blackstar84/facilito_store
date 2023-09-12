@@ -142,7 +142,7 @@ STRIPE_PRIVATE_KEY = 'sk_test_51NpFzvEzgrQQ4ItUTGKlQRZ9e4lkOix7M6D7mjiriyBt7PE90
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIR=(
+STATICFILES_DIRS=(
     os.path.join(BASE_DIR, 'static'),
 )
 
