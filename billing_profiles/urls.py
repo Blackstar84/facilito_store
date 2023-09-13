@@ -5,6 +5,7 @@ from . import views
 app_name = 'billing_profiles'
 
 urlpatterns = [
-     path('', views.create, name='create'),
+     path('nuevo', views.create, name='create'),
+     path('', views.BillingProfileListView.as_view(), name='billing_profiles')
 ]
 

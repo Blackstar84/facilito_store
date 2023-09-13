@@ -6,7 +6,21 @@ from django.contrib import messages
 
 from .models import BillingProfile
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import ListView
+
 # Create your views here.
+
+
+class BillingProfileListView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    template_name = 'billing_profiles/billing_profiles.html'
+    
+    def get_queryset(self):
+        hola = self.request.user.billing_profiles
+        print(hola)
+        return self.request.user.billing_profiles
+
 
 @login_required(login_url='login')
 def create(request):
