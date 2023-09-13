@@ -94,7 +94,7 @@ def confirm(request, cart, order):
    return render(request, 'orders/confirm.html',{
       'cart': cart,
       'order': order,
-      'breadcrumb': breadcrumb(address=True, confirmation=True),
+      'breadcrumb': breadcrumb(address=True, payment=True, confirmation=True),
       'shipping_address': shipping_address
    })
    
@@ -135,3 +135,17 @@ def complete(request, cart, order):
    
    messages.success(request, 'Compra completada exitosamente')
    return redirect('index')
+
+
+@login_required(login_url='login')
+@validate_cart_and_order
+def payment(request, cart, order):
+   
+   billing_profile = order.get_or_set_billing_profile()
+   
+   return render(request, 'orders/payment.html',{
+      'cart': cart,
+      'order': order,
+      'billing_profile': billing_profile,
+      'breadcrumb': breadcrumb(address=True, payment=True)
+   })
