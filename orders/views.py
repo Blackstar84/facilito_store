@@ -25,6 +25,8 @@ from .decorators import validate_cart_and_order
 
 from charges.models import Charge
 
+from django.db import transaction
+
 # Create your views here.
 
 
@@ -139,17 +141,18 @@ def complete(request, cart, order):
   
    charge = Charge.objects.create_charge(order)
    if charge:
-      order.complete()
-      # Esto ya no funciona con gmail por su protocolo de seguridad
-      # Mail.send_complete_order(order,request.user)
-      # thread = threading.Thread(target=Mail.send_complete_order, args=(
-      #    order, request.user
-      # ))
-      # thread.start()
-      destroy_cart(request)
-      destroy_order(request)
-      
-      messages.success(request, 'Compra completada exitosamente')
+      with transaction.atomic():
+         order.complete()
+         # Esto ya no funciona con gmail por su protocolo de seguridad
+         # Mail.send_complete_order(order,request.user)
+         # thread = threading.Thread(target=Mail.send_complete_order, args=(
+         #    order, request.user
+         # ))
+         # thread.start()
+         destroy_cart(request)
+         destroy_order(request)
+         
+         messages.success(request, 'Compra completada exitosamente')
    return redirect('index')
 
 
