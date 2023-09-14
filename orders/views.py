@@ -23,6 +23,8 @@ from django.db.models.query import EmptyQuerySet
 
 from .decorators import validate_cart_and_order
 
+from charges.models import Charge
+
 # Create your views here.
 
 
@@ -135,17 +137,19 @@ def complete(request, cart, order):
    if request.user.id != order.user_id:
      return redirect('carts:cart')
   
-   order.complete()
-   # Esto ya no funciona con gmail por su protocolo de seguridad
-   # Mail.send_complete_order(order,request.user)
-   # thread = threading.Thread(target=Mail.send_complete_order, args=(
-   #    order, request.user
-   # ))
-   # thread.start()
-   destroy_cart(request)
-   destroy_order(request)
-   
-   messages.success(request, 'Compra completada exitosamente')
+   charge = Charge.objects.create_charge(order)
+   if charge:
+      order.complete()
+      # Esto ya no funciona con gmail por su protocolo de seguridad
+      # Mail.send_complete_order(order,request.user)
+      # thread = threading.Thread(target=Mail.send_complete_order, args=(
+      #    order, request.user
+      # ))
+      # thread.start()
+      destroy_cart(request)
+      destroy_order(request)
+      
+      messages.success(request, 'Compra completada exitosamente')
    return redirect('index')
 
 
