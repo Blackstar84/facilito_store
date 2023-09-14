@@ -12,6 +12,7 @@ from products.models import Product
 class ProductListView(ListView): # id -> pk
     template_name = 'index.html'
     queryset = Product.objects.all().order_by('-id')
+    paginate_by = 2
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
